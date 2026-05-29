@@ -44,11 +44,41 @@ export default function App() {
   const [page, setPage] = useState<Page>('dashboard');
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [plannerPostData, setPlannerPostData] = useState<PlannerPostData | null>(null);
+  const [oauthBanner, setOauthBanner] = useState<{ type: 'success' | 'error'; msg: string } | null>(null);
 
   useEffect(() => {
     const key = `onboarding_done_${userId}`;
     if (!localStorage.getItem(key)) setShowOnboarding(true);
   }, [userId]);
+
+  // Handle OAuth redirect callback (mobile flow)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('oauth_success') === '1') {
+      const igToken = params.get('ig_token') || '';
+      const igAccountId = params.get('ig_account_id') || '';
+      const igUsername = params.get('ig_username') || '';
+
+      // The edge function already saved to DB, just show success banner
+      const msg = igUsername ? `Instagram @${igUsername} conectado!` : 'Instagram conectado com sucesso!';
+      setOauthBanner({ type: 'success', msg });
+      setPage('settings');
+      setTimeout(() => setOauthBanner(null), 5000);
+
+      // Clean URL without reload
+      const clean = window.location.pathname;
+      window.history.replaceState({}, '', clean);
+
+      // Suppress unused var warning
+      void igToken; void igAccountId;
+    } else if (params.get('error')) {
+      setOauthBanner({ type: 'error', msg: `Erro ao conectar: ${params.get('error')}` });
+      setPage('settings');
+      setTimeout(() => setOauthBanner(null), 6000);
+      const clean = window.location.pathname;
+      window.history.replaceState({}, '', clean);
+    }
+  }, []);
 
   // Poll for 500+ view alerts
   useEffect(() => {
@@ -87,6 +117,15 @@ export default function App() {
 
   return (
     <div className="flex h-full bg-slate-900">
+      {oauthBanner && (
+        <div className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-xl text-sm font-semibold shadow-xl border flex items-center gap-2 max-w-sm w-[90vw] ${
+          oauthBanner.type === 'success'
+            ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+            : 'bg-red-500/15 text-red-300 border-red-500/30'
+        }`}>
+          {oauthBanner.type === 'success' ? '✓' : '✗'} {oauthBanner.msg}
+        </div>
+      )}
       <Sidebar currentPage={page} onNavigate={setPage} username={undefined} />
       <main
         className="flex-1 scroll-ios main-scroll"

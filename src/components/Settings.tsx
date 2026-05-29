@@ -121,8 +121,20 @@ export default function Settings({ userId }: Props) {
 
   const connectFacebook = useCallback(() => {
     const redirectUri = `${SUPABASE_URL}/functions/v1/facebook-oauth?action=callback`;
-    const fbUrl = `https://www.facebook.com/v21.0/dialog/oauth?client_id=${FB_APP_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(FB_SCOPES)}&state=${userId}&response_type=code`;
+    // state = "userId|appUrl" so callback can redirect back to the app
+    const appUrl = window.location.origin + window.location.pathname;
+    const state = `${userId}|${appUrl}`;
+    const fbUrl = `https://www.facebook.com/v21.0/dialog/oauth?client_id=${FB_APP_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(FB_SCOPES)}&state=${encodeURIComponent(state)}&response_type=code`;
 
+    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      // Mobile: full-page redirect — Facebook redirects back to app with params
+      window.location.href = fbUrl;
+      return;
+    }
+
+    // Desktop: popup flow
     const popup = window.open(fbUrl, 'fb_oauth', 'width=600,height=700,scrollbars=yes');
     setIgConnecting(true);
 
