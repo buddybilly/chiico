@@ -83,13 +83,13 @@ export default function Sidebar({ currentPage, onNavigate, username, onSyncDevic
         {onSyncDevices && (
           <button
             onClick={onSyncDevices}
-            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-slate-500 hover:text-sky-400 hover:bg-sky-500/10 transition mb-1"
+            className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold bg-sky-500/15 text-sky-400 border border-sky-500/25 hover:bg-sky-500/25 transition mb-3"
           >
-            <Smartphone className="w-3.5 h-3.5 flex-shrink-0" />
+            <Smartphone className="w-4 h-4 flex-shrink-0" />
             Sincronizar dispositivos
           </button>
         )}
-        <p className="text-[10px] text-slate-700 text-center mt-1 px-3">
+        <p className="text-[10px] text-slate-700 text-center px-3">
           Desenvolvido por <span className="text-slate-600 font-medium">Francisco Menezes</span>
         </p>
       </div>
