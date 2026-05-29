@@ -546,7 +546,7 @@ export default function CreatePost({ userId, initialData, onInitialDataUsed }: P
 
           <div className="bg-slate-800/60 border border-slate-700/50 rounded-2xl p-6 space-y-4">
             <label className="block text-sm font-medium text-slate-300 flex items-center gap-2"><ImagePlus className="w-4 h-4 text-amber-400" />Imagem do Post</label>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
               {SAMPLE_IMAGES.map(img => (
                 <button key={img} onClick={() => { setImageUrl(img); setCustomImageUrl(''); }} className={`aspect-square rounded-xl overflow-hidden border-2 transition ${imageUrl === img && !customImageUrl && !generatedImageUrl ? 'border-sky-500 ring-2 ring-sky-500/30' : 'border-slate-700 hover:border-slate-500'}`}>
                   <img src={img} alt="" className="w-full h-full object-cover" />
@@ -576,7 +576,7 @@ export default function CreatePost({ userId, initialData, onInitialDataUsed }: P
               <Instagram className="w-3.5 h-3.5 text-pink-400" />
               Pre-visualizacao do Post
             </h3>
-            <div className="bg-slate-900/80 border border-slate-700/50 rounded-2xl overflow-hidden max-w-sm mx-auto">
+            <div className="bg-slate-900/80 border border-slate-700/50 rounded-2xl overflow-hidden w-full max-w-sm mx-auto">
               {/* Mock Instagram header */}
               <div className="flex items-center gap-2.5 px-4 py-3 border-b border-slate-700/40">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-amber-500 flex-shrink-0" />

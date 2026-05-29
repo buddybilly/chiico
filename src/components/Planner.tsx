@@ -377,7 +377,7 @@ export default function Planner({ userId, onCreatePost }: Props) {
                       )}
                     </div>
                     {plan.posts && plan.posts.length > 0 && (
-                      <div className="mt-2 h-1.5 bg-slate-700/60 rounded-full overflow-hidden w-48">
+                      <div className="mt-2 h-1.5 bg-slate-700/60 rounded-full overflow-hidden w-full max-w-[12rem]">
                         <div
                           className="h-full bg-gradient-to-r from-sky-500 to-cyan-500 rounded-full transition-all duration-500"
                           style={{ width: `${progress}%` }}

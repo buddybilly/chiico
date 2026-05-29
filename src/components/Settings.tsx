@@ -270,7 +270,7 @@ export default function Settings({ userId }: Props) {
         </div>
 
         {/* Cards de selecao */}
-        <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 mb-4">
           {PLATFORM_CONFIG.map(({ key, label, sublabel, Icon, color, bg, border, activeBorder, ring, disabled }) => {
             const connected = isConnected(key);
             const active = activePlatform === key;
@@ -468,7 +468,7 @@ export default function Settings({ userId }: Props) {
                           />
                         </div>
 
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                           <div>
                             <label className="block text-xs font-medium text-slate-400 mb-1">Modelo</label>
                             <select

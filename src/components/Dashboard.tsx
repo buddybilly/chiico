@@ -230,7 +230,7 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
         </div>
       )}
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
         {statCards.map(card => {
           const Icon = card.icon;
           return (
@@ -245,7 +245,7 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
 
       {/* Metrics Cards */}
       {stats.published > 0 && (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
           {metricCards.map(card => {
             const Icon = card.icon;
             return (
@@ -287,7 +287,7 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
         </div>
       )}
 
-      <div className="grid lg:grid-cols-3 gap-4 sm:gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Next Scheduled Post */}
         <div className="bg-slate-800/60 border border-slate-700/50 rounded-2xl p-4 sm:p-6">
           <h3 className="text-sm sm:text-base font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2"><Calendar className="w-4 h-4 text-amber-400" />Proximo Agendamento</h3>
