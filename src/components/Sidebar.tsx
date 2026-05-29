@@ -88,8 +88,11 @@ export default function Sidebar({ currentPage, onNavigate, username }: Props) {
 
   return (
     <>
-      {/* Mobile top bar */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 py-3 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
+      {/* Mobile top bar — includes safe-area-inset-top for notch/Dynamic Island */}
+      <div
+        className="lg:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 border-b border-slate-800 ios-blur bg-slate-900/95"
+        style={{ paddingTop: `calc(env(safe-area-inset-top, 0px) + 0.75rem)`, paddingBottom: '0.75rem' }}
+      >
         <div className="flex items-center gap-2.5">
           <img src="/FE79B38A-DD32-4D48-A4F2-0F1A474620C3.jpeg" alt="Logo" className="w-8 h-8 rounded-lg object-cover" />
           <span className="text-sm font-bold text-white">PostFlow IA</span>
@@ -103,8 +106,11 @@ export default function Sidebar({ currentPage, onNavigate, username }: Props) {
         </button>
       </div>
 
-      {/* Mobile bottom tab bar */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-sm border-t border-slate-800 flex items-stretch safe-bottom">
+      {/* Mobile bottom tab bar — includes safe-area-inset-bottom for home indicator */}
+      <nav
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 ios-blur bg-slate-900/95 border-t border-slate-800 flex items-stretch"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+      >
         {mobileTabItems.map(item => {
           const Icon = item.icon;
           const active = currentPage === item.id;
@@ -127,14 +133,15 @@ export default function Sidebar({ currentPage, onNavigate, username }: Props) {
       {/* Mobile drawer overlay */}
       {mobileOpen && (
         <div
-          className="lg:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+          className="lg:hidden fixed inset-0 z-50 bg-black/60 ios-blur"
           onClick={() => setMobileOpen(false)}
         />
       )}
 
       {/* Mobile full drawer (all items) */}
       <aside
-        className={`lg:hidden fixed top-0 left-0 z-50 h-full w-72 bg-slate-900 border-r border-slate-800 flex flex-col transition-transform duration-300 ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`lg:hidden fixed top-0 left-0 z-50 w-72 bg-slate-900 border-r border-slate-800 flex flex-col transition-transform duration-300 ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        style={{ height: '100%', paddingTop: 'env(safe-area-inset-top, 0px)', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
       >
         {sidebarContent}
       </aside>

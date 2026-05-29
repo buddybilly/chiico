@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import type React from 'react';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import CreatePost from './components/CreatePost';
@@ -85,9 +86,12 @@ export default function App() {
   }, [userId]);
 
   return (
-    <div className="flex min-h-screen bg-slate-900">
+    <div className="flex h-full bg-slate-900">
       <Sidebar currentPage={page} onNavigate={setPage} username={undefined} />
-      <main className="flex-1 overflow-y-auto pt-14 pb-16 lg:pt-0 lg:pb-0">
+      <main
+        className="flex-1 scroll-ios main-scroll"
+        style={{ height: '100%', overflowY: 'auto', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+      >
         {page === 'dashboard' && (
           <Dashboard
             userId={userId}
