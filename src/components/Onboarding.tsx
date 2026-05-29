@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Sparkles, Key, Instagram, ArrowRight, Check, X, Zap, CalendarDays, Bot } from 'lucide-react';
+import { Sparkles, Instagram, ArrowRight, Check, X, Zap, CalendarDays, Bot } from 'lucide-react';
 
 interface Props {
   onComplete: () => void;
@@ -14,19 +14,8 @@ const STEPS = [
     bg: 'bg-sky-500/15',
     border: 'border-sky-500/20',
     title: 'Bem-vindo ao PostFlow IA',
-    desc: 'Seu assistente de conteudo para Instagram com inteligencia artificial. Em 3 passos voce estara pronto para criar e agendar posts incriveis.',
+    desc: 'Seu assistente de conteudo para Instagram com inteligencia artificial. Em 2 passos voce estara pronto para criar e agendar posts incriveis.',
     action: null,
-  },
-  {
-    id: 'api',
-    icon: Key,
-    color: 'text-amber-400',
-    bg: 'bg-amber-500/15',
-    border: 'border-amber-500/20',
-    title: 'Configure sua chave de IA',
-    desc: 'Adicione sua chave OpenAI/Gemini para usar os agentes de geracao de conteudo. Sem ela, o pipeline de IA nao funcionara.',
-    action: 'settings',
-    actionLabel: 'Ir para Configuracoes',
   },
   {
     id: 'instagram',
@@ -46,7 +35,7 @@ const STEPS = [
     bg: 'bg-emerald-500/15',
     border: 'border-emerald-500/20',
     title: 'Crie seu primeiro post',
-    desc: 'Agora e so descrever o assunto e deixar os 3 agentes GPT gerarem tema, legenda e imagem automaticamente para voce.',
+    desc: 'Agora e so descrever o assunto e deixar os 3 agentes Gemini gerarem tema, legenda e imagem automaticamente para voce.',
     action: 'create',
     actionLabel: 'Criar Primeiro Post',
   },
