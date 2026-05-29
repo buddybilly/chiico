@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import type React from 'react';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
@@ -10,6 +10,7 @@ import AITools from './components/AITools';
 import QuickEditor from './components/QuickEditor';
 import Planner from './components/Planner';
 import { supabase } from './lib/supabase';
+import { Smartphone, Copy, Check, RefreshCw } from 'lucide-react';
 
 type Page = 'dashboard' | 'create' | 'scheduled' | 'grid' | 'settings' | 'ai-tools' | 'quick-edit' | 'planner';
 
@@ -18,6 +19,8 @@ interface PlannerPostData {
   theme: string;
   hashtags: string[];
 }
+
+const USER_ID_KEY = 'postflow_user_id';
 
 function generateId(): string {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {
@@ -30,17 +33,113 @@ function generateId(): string {
 }
 
 function getOrCreateUserId(): string {
-  const key = 'postflow_user_id';
-  let id = localStorage.getItem(key);
+  let id = localStorage.getItem(USER_ID_KEY);
   if (!id) {
     id = generateId();
-    localStorage.setItem(key, id);
+    localStorage.setItem(USER_ID_KEY, id);
   }
   return id;
 }
 
+// Short sync code: first 8 chars of the UUID (easy to type)
+function codeFromId(id: string): string {
+  return id.replace(/-/g, '').slice(0, 8).toUpperCase();
+}
+
+function SyncModal({ currentUserId, onSync }: { currentUserId: string; onSync: (id: string) => void }) {
+  const [input, setInput] = useState('');
+  const [error, setError] = useState('');
+  const [copied, setCopied] = useState(false);
+  const myCode = codeFromId(currentUserId);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  function handleCopy() {
+    navigator.clipboard.writeText(myCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
+  async function handleSync() {
+    const code = input.trim().toUpperCase().replace(/[^A-F0-9]/g, '');
+    if (code.length !== 8) {
+      setError('Codigo invalido. Digite os 8 caracteres exatos.');
+      return;
+    }
+    // Find a userId whose code matches
+    const { data } = await supabase
+      .from('user_settings')
+      .select('user_id')
+      .ilike('user_id', `${code.toLowerCase()}%`)
+      .maybeSingle();
+
+    if (!data) {
+      setError('Codigo nao encontrado. Verifique se digitou corretamente.');
+      return;
+    }
+    localStorage.setItem(USER_ID_KEY, data.user_id);
+    onSync(data.user_id);
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 backdrop-blur-sm p-4">
+      <div className="bg-slate-900 border border-slate-700/60 rounded-2xl max-w-sm w-full p-6 space-y-6 shadow-2xl">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-500/20 flex items-center justify-center">
+            <Smartphone className="w-5 h-5 text-sky-400" />
+          </div>
+          <div>
+            <h3 className="text-base font-bold text-white">Sincronizar dispositivos</h3>
+            <p className="text-xs text-slate-400">Use o mesmo codigo nos dois aparelhos</p>
+          </div>
+        </div>
+
+        {/* My code */}
+        <div className="space-y-2">
+          <p className="text-xs font-medium text-slate-400">SEU CODIGO NESTE DISPOSITIVO</p>
+          <div className="flex items-center gap-3 bg-slate-800 border border-slate-700/50 rounded-xl px-4 py-3">
+            <span className="flex-1 text-2xl font-mono font-bold tracking-[0.25em] text-white">{myCode}</span>
+            <button onClick={handleCopy} className="text-sky-400 hover:text-sky-300 transition">
+              {copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
+            </button>
+          </div>
+          <p className="text-xs text-slate-500">Copie este codigo e cole no outro dispositivo para sincronizar os dados.</p>
+        </div>
+
+        {/* Enter other code */}
+        <div className="space-y-2">
+          <p className="text-xs font-medium text-slate-400">OU DIGITE O CODIGO DE OUTRO DISPOSITIVO</p>
+          <input
+            ref={inputRef}
+            value={input}
+            onChange={e => { setInput(e.target.value.toUpperCase()); setError(''); }}
+            placeholder="Ex: A1B2C3D4"
+            maxLength={8}
+            className="w-full bg-slate-800 border border-slate-700/50 text-white placeholder-slate-600 rounded-xl px-4 py-3 text-lg font-mono font-bold tracking-widest text-center focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition"
+          />
+          {error && <p className="text-xs text-red-400">{error}</p>}
+          <button
+            onClick={handleSync}
+            className="flex items-center justify-center gap-2 w-full py-2.5 bg-sky-600 hover:bg-sky-500 text-white text-sm font-semibold rounded-xl transition"
+          >
+            <RefreshCw className="w-4 h-4" /> Sincronizar com este codigo
+          </button>
+        </div>
+
+        <p className="text-xs text-slate-600 text-center">Feche para continuar sem sincronizar</p>
+        <button
+          onClick={() => onSync(currentUserId)}
+          className="w-full text-xs text-slate-500 hover:text-slate-300 transition py-1"
+        >
+          Continuar sem sincronizar
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
-  const [userId] = useState<string>(getOrCreateUserId);
+  const [userId, setUserId] = useState<string>(getOrCreateUserId);
+  const [showSync, setShowSync] = useState(false);
   const [page, setPage] = useState<Page>('dashboard');
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [plannerPostData, setPlannerPostData] = useState<PlannerPostData | null>(null);
@@ -117,6 +216,12 @@ export default function App() {
 
   return (
     <div className="flex h-full bg-slate-900">
+      {showSync && (
+        <SyncModal
+          currentUserId={userId}
+          onSync={(id) => { setUserId(id); setShowSync(false); }}
+        />
+      )}
       {oauthBanner && (
         <div className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-xl text-sm font-semibold shadow-xl border flex items-center gap-2 max-w-sm w-[90vw] ${
           oauthBanner.type === 'success'
@@ -126,7 +231,7 @@ export default function App() {
           {oauthBanner.type === 'success' ? '✓' : '✗'} {oauthBanner.msg}
         </div>
       )}
-      <Sidebar currentPage={page} onNavigate={setPage} username={undefined} />
+      <Sidebar currentPage={page} onNavigate={setPage} username={undefined} onSyncDevices={() => setShowSync(true)} />
       <main
         className="flex-1 scroll-ios main-scroll"
         style={{ height: '100%', overflowY: 'auto', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
