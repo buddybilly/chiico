@@ -3,13 +3,19 @@ import { supabase, UserSettings, GptAgent, AgentRole } from '../lib/supabase';
 import {
   Instagram, Save, Check, Loader2, Bot, Sparkles,
   Type, Image, Plus, Trash2, ChevronDown, ChevronUp, Globe, Linkedin, Link,
-  CheckCircle2, AlertCircle, XCircle
+  CheckCircle2, AlertCircle, XCircle, Smartphone, Copy
 } from 'lucide-react';
 import ConnectionGuide, { Platform } from './ConnectionGuide';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
 const FB_APP_ID = '848251645022190';
 const FB_SCOPES = 'pages_show_list,instagram_basic,instagram_content_publish,pages_read_engagement,business_management';
+
+const USER_ID_KEY = 'postflow_user_id';
+
+function codeFromId(id: string): string {
+  return id.replace(/-/g, '').slice(0, 8).toUpperCase();
+}
 
 interface Props {
   userId: string;
@@ -112,6 +118,14 @@ export default function Settings({ userId }: Props) {
   const [igConnecting, setIgConnecting] = useState(false);
   const [igJustConnected, setIgJustConnected] = useState(false);
   const [activePlatform, setActivePlatform] = useState<Platform | null>(null);
+  const [codeCopied, setCodeCopied] = useState(false);
+  const myCode = codeFromId(userId);
+
+  function handleCopyCode() {
+    navigator.clipboard.writeText(myCode);
+    setCodeCopied(true);
+    setTimeout(() => setCodeCopied(false), 2000);
+  }
 
   const igConnected = !!(settings.instagram_access_token && settings.instagram_account_id);
   const gbConnected = !!(settings.google_business_access_token && settings.google_business_location_id);
@@ -268,6 +282,25 @@ export default function Settings({ userId }: Props) {
           <Check className="w-4 h-4" /> Salvo!
         </div>
       )}
+
+      {/* Codigo de sincronizacao */}
+      <div className="mb-8 bg-sky-500/10 border border-sky-500/25 rounded-2xl p-4 flex items-center gap-4">
+        <div className="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-500/30 flex items-center justify-center flex-shrink-0">
+          <Smartphone className="w-5 h-5 text-sky-400" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-xs font-semibold text-sky-400 mb-0.5">CODIGO PARA SINCRONIZAR DISPOSITIVOS</p>
+          <p className="text-2xl font-mono font-bold tracking-[0.2em] text-white">{myCode}</p>
+          <p className="text-xs text-slate-500 mt-0.5">Use este codigo em outro dispositivo para ver os mesmos dados</p>
+        </div>
+        <button
+          onClick={handleCopyCode}
+          className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-sky-500/20 text-sky-400 hover:bg-sky-500/30 transition text-xs font-semibold flex-shrink-0"
+        >
+          {codeCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+          {codeCopied ? 'Copiado!' : 'Copiar'}
+        </button>
+      </div>
 
       {/* Conexoes de plataformas */}
       <div className="mb-8">
