@@ -2,6 +2,145 @@ import { useState, useEffect } from 'react';
 import { supabase, fnHeaders, AgentResult, AutoScheduleSlot, PostType, Platform, PLATFORM_CONFIG } from '../lib/supabase';
 import { Sparkles, ImagePlus, Calendar, CalendarDays, Send, Hash, Wand2, Check, Loader2, Type, Bot, Zap, RotateCcw, Clock, LayoutGrid, Film, Columns, ThumbsUp, ThumbsDown, SlidersHorizontal, RefreshCw, CheckCircle2, XCircle, Pencil, Instagram, Globe, Linkedin, Search, TrendingUp, ChevronRight, X, Lightbulb } from 'lucide-react';
 
+interface IdentificationCard {
+  colorClass: string;
+  dotClass: string;
+  borderClass: string;
+  bgClass: string;
+  textColor: string;
+  title: string;
+  description: string;
+}
+
+const IDENTIFICATION_CARDS: IdentificationCard[] = [
+  {
+    colorClass: 'bg-red-600',
+    dotClass: 'bg-red-600',
+    borderClass: 'border-red-500/30',
+    bgClass: 'bg-red-500/10',
+    textColor: 'text-red-400',
+    title: 'Vermelho',
+    description: 'Alergia medicamentosa/alimentar'
+  },
+  {
+    colorClass: 'bg-orange-500',
+    dotClass: 'bg-orange-500',
+    borderClass: 'border-orange-500/30',
+    bgClass: 'bg-orange-500/10',
+    textColor: 'text-orange-400',
+    title: 'Laranja',
+    description: 'Alergia ao Látex (Latex Free)'
+  },
+  {
+    colorClass: 'bg-yellow-400',
+    dotClass: 'bg-yellow-400',
+    borderClass: 'border-yellow-500/30',
+    bgClass: 'bg-yellow-500/10',
+    textColor: 'text-yellow-400',
+    title: 'Amarelo',
+    description: 'Alto risco de quedas'
+  },
+  {
+    colorClass: 'bg-blue-500',
+    dotClass: 'bg-blue-500',
+    borderClass: 'border-blue-500/30',
+    bgClass: 'bg-blue-500/10',
+    textColor: 'text-blue-400',
+    title: 'Azul',
+    description: 'Risco de Lesão por Pressão'
+  },
+  {
+    colorClass: 'bg-purple-600',
+    dotClass: 'bg-purple-600',
+    borderClass: 'border-purple-500/30',
+    bgClass: 'bg-purple-500/10',
+    textColor: 'text-purple-400',
+    title: 'Roxo',
+    description: 'Broncoaspiração / DNR'
+  },
+  {
+    colorClass: 'bg-pink-600',
+    dotClass: 'bg-pink-600',
+    borderClass: 'border-pink-500/30',
+    bgClass: 'bg-pink-500/10',
+    textColor: 'text-pink-400',
+    title: 'Rosa',
+    description: 'Membro restrito'
+  },
+  {
+    colorClass: 'bg-[#785942]',
+    dotClass: 'bg-[#785942]',
+    borderClass: 'border-[#785942]/30',
+    bgClass: 'bg-[#785942]/10',
+    textColor: 'text-[#d4a373]',
+    title: 'Marrom',
+    description: 'Dificuldade de comunicação'
+  },
+  {
+    colorClass: 'bg-emerald-600',
+    dotClass: 'bg-emerald-600',
+    borderClass: 'border-emerald-500/30',
+    bgClass: 'bg-emerald-500/10',
+    textColor: 'text-emerald-400',
+    title: 'Verde',
+    description: 'Sem alterações dignas de nota'
+  },
+  {
+    colorClass: 'bg-purple-700',
+    dotClass: 'bg-purple-700',
+    borderClass: 'border-purple-500/30',
+    bgClass: 'bg-purple-500/10',
+    textColor: 'text-purple-300',
+    title: 'Roxa',
+    description: 'Risco de hemorragia'
+  },
+  {
+    colorClass: 'bg-slate-500',
+    dotClass: 'bg-slate-500',
+    borderClass: 'border-slate-500/30',
+    bgClass: 'bg-slate-500/10',
+    textColor: 'text-slate-300',
+    title: 'Cardiovascular',
+    description: 'HAS, IAM, arritmias, ICC'
+  },
+  {
+    colorClass: 'bg-slate-600',
+    dotClass: 'bg-slate-600',
+    borderClass: 'border-slate-500/30',
+    bgClass: 'bg-slate-500/10',
+    textColor: 'text-slate-300',
+    title: 'Cinza + Azul',
+    description: 'Diabético (DM)'
+  },
+  {
+    colorClass: 'bg-black',
+    dotClass: 'bg-black border border-slate-600',
+    borderClass: 'border-slate-700/60',
+    bgClass: 'bg-slate-800/40',
+    textColor: 'text-slate-200',
+    title: 'Preta',
+    description: 'Uso de substâncias ilícitas'
+  },
+  {
+    colorClass: 'bg-black',
+    dotClass: 'bg-black border border-slate-600',
+    borderClass: 'border-slate-700/60',
+    bgClass: 'bg-slate-800/40',
+    textColor: 'text-slate-200',
+    title: 'Preta dupla',
+    description: 'Antirreabsortivos / Neoplasia'
+  },
+  {
+    colorClass: 'bg-purple-800',
+    dotClass: 'bg-purple-800',
+    borderClass: 'border-purple-500/30',
+    bgClass: 'bg-purple-500/10',
+    textColor: 'text-purple-300',
+    title: 'Roxa + Verde',
+    description: 'Benzodiazepínicos, antidepressivos ...'
+  }
+];
+
 interface Props {
   userId: string;
   initialData?: { caption: string; theme: string; hashtags: string[] };
@@ -315,6 +454,22 @@ export default function CreatePost({ userId, initialData, onInitialDataUsed }: P
         <p className="text-slate-400 mt-1 text-sm">Gere conteudo com seus agentes GPT e agende</p>
       </div>
 
+{/* Cores Prontuário */}
+      <div className="mb-6 bg-slate-800/60 border border-slate-700/50 rounded-2xl p-5">
+        <h3 className="text-sm font-semibold text-white mb-3">Cores Prontuário</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {IDENTIFICATION_CARDS.map((card, idx) => (
+            <div key={idx} className={`flex items-start gap-3 p-3 rounded-xl border ${card.borderClass} ${card.bgClass}`}>
+              <div className={`w-5 h-5 rounded-full ${card.colorClass} flex-shrink-0 mt-0.5`} />
+              <div>
+                <p className={`text-xs font-semibold ${card.textColor}`}>{card.title}</p>
+                <p className="text-xs text-slate-300 mt-0.5">{card.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {fromPlanner && (
         <div className="mb-5 flex items-center gap-3 px-4 py-3 bg-sky-500/10 border border-sky-500/20 rounded-xl">
           <CalendarDays className="w-4 h-4 text-sky-400 flex-shrink-0" />
@@ -574,7 +729,7 @@ export default function CreatePost({ userId, initialData, onInitialDataUsed }: P
           <div className="bg-slate-800/60 border border-slate-700/50 rounded-2xl p-5">
             <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
               <Instagram className="w-3.5 h-3.5 text-pink-400" />
-              Pre-visualizacao do Post
+              Cores Prontuário
             </h3>
             <div className="bg-slate-900/80 border border-slate-700/50 rounded-2xl overflow-hidden w-full max-w-sm mx-auto">
               {/* Mock Instagram header */}
