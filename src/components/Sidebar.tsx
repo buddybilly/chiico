@@ -44,7 +44,7 @@ export default function Sidebar({ currentPage, onNavigate, username, onSyncDevic
           <img src="/FE79B38A-DD32-4D48-A4F2-0F1A474620C3.jpeg" alt="Logo" className="w-10 h-10 rounded-lg object-cover" />
           <div>
             <h1 className="text-base font-bold text-white">Etiquetas Prontuário</h1>
-            <p className="text-xs text-slate-500">Identificação no Prontuário</p>
+            <p className="text-xs text-slate-500">Gestão de Postagens</p>
           </div>
         </div>
         <button

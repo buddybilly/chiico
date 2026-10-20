@@ -195,7 +195,7 @@ export default function App() {
           if (!notified500.has(m.id) && m.reached_500) {
             notified500.add(m.id);
             if (Notification.permission === 'granted') {
-              new Notification('Etiquetas Prontuário - Chico - 500+ visualizacoes!', {
+              new Notification('Etiquetas Prontuário - 500+ visualizacoes!', {
                 body: `Seu post alcancou ${m.views} views!`,
                 icon: '/FE79B38A-DD32-4D48-A4F2-0F1A474620C3.jpeg',
               });
