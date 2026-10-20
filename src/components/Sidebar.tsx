@@ -43,8 +43,8 @@ export default function Sidebar({ currentPage, onNavigate, username, onSyncDevic
         <div className="flex items-center gap-3">
           <img src="/FE79B38A-DD32-4D48-A4F2-0F1A474620C3.jpeg" alt="Logo" className="w-10 h-10 rounded-lg object-cover" />
           <div>
-            <h1 className="text-base font-bold text-white">PostFlow IA Chico</h1>
-            <p className="text-xs text-slate-500">Instagram Scheduler</p>
+            <h1 className="text-base font-bold text-white">Etiquetas Prontuário</h1>
+            <p className="text-xs text-slate-500">Identificação no Prontuário</p>
           </div>
         </div>
         <button
@@ -105,7 +105,7 @@ export default function Sidebar({ currentPage, onNavigate, username, onSyncDevic
       >
         <div className="flex items-center gap-2.5">
           <img src="/FE79B38A-DD32-4D48-A4F2-0F1A474620C3.jpeg" alt="Logo" className="w-8 h-8 rounded-lg object-cover" />
-          <span className="text-sm font-bold text-white">PostFlow IA</span>
+          <span className="text-sm font-bold text-white">Prontuário</span>
         </div>
         <button
           onClick={() => setMobileOpen(true)}
