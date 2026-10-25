@@ -207,17 +207,7 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
         })}
       </div>
 
-      {/* 500+ Alert Banner */}
-      {posts500 > 0 && (
-        <div className="mb-5 bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 sm:p-5 flex items-center gap-3 sm:gap-4">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-500/20 flex items-center justify-center flex-shrink-0"><Zap className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" /></div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-amber-400">{posts500} post{posts500 > 1 ? 's' : ''} com 500+ visualizacoes!</p>
-            <p className="text-xs text-amber-300/60 hidden sm:block">Seus conteudos estao performando muito bem</p>
-          </div>
-          <button onClick={() => onNavigate('scheduled')} className="text-xs text-amber-400 hover:text-amber-300 font-medium transition flex-shrink-0">Ver</button>
-        </div>
-      )}
+
 
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
         {statCards.map(card => {

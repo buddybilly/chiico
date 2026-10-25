@@ -222,15 +222,7 @@ export default function App() {
           onSync={(id) => { setUserId(id); setShowSync(false); }}
         />
       )}
-      {oauthBanner && (
-        <div className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-xl text-sm font-semibold shadow-xl border flex items-center gap-2 max-w-sm w-[90vw] ${
-          oauthBanner.type === 'success'
-            ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
-            : 'bg-red-500/15 text-red-300 border-red-500/30'
-        }`}>
-          {oauthBanner.type === 'success' ? '✓' : '✗'} {oauthBanner.msg}
-        </div>
-      )}
+
       <Sidebar currentPage={page} onNavigate={setPage} username={undefined} onSyncDevices={() => setShowSync(true)} />
       <main
         className="flex-1 scroll-ios main-scroll"
