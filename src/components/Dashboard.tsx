@@ -184,17 +184,6 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
           onNavigate={(p) => onNavigate(p as 'create' | 'scheduled' | 'settings')}
         />
       )}
-      <div className="flex items-center justify-between mb-6 sm:mb-8">
-        <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white">Dashboard</h2>
-          <p className="text-slate-400 mt-0.5 text-sm">Visao geral dos seus posts e metricas</p>
-        </div>
-        <button onClick={fetchMetrics} disabled={fetchingMetrics} className="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl bg-sky-500/15 text-sky-400 border border-sky-500/20 text-xs sm:text-sm font-medium hover:bg-sky-500/25 transition disabled:opacity-60">
-          {fetchingMetrics ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
-          <span className="hidden sm:inline">Atualizar Metricas</span>
-          <span className="sm:hidden">Atualizar</span>
-        </button>
-      </div>
 
       {/* Platform Connection Status */}
       <div className="mb-5 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
