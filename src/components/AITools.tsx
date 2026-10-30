@@ -9,7 +9,7 @@ const AI_TOOLS = [
   {
     id: 'gemini',
     name: 'Google Gemini',
-    desc: 'IA multimodal do Google. Gera textos, analisa imagens, cria conteudo.',
+    desc: 'IA multimodal principal utilizada para geração de textos inteligentes, legendas, análises e ideias de conteúdo.',
     url: 'https://gemini.google.com',
     icon: Sparkles,
     color: 'text-blue-400',
@@ -17,12 +17,12 @@ const AI_TOOLS = [
     border: 'border-blue-500/25',
     hoverBg: 'hover:from-blue-500/20 hover:to-blue-600/20',
     gradient: 'from-blue-500/10 to-blue-600/10',
-    capabilities: ['Texto', 'Imagem', 'Codigo', 'Analise'],
+    capabilities: ['Texto', 'Legendas', 'Estratégia', 'Análise'],
   },
   {
     id: 'veo',
     name: 'Google Veo',
-    desc: 'Geracao de video com IA do Google. Crie videos a partir de prompts de texto.',
+    desc: 'IA de geração de vídeos avançada do Google integrada para criação de conteúdos audiovisuais a partir de prompts.',
     url: 'https://labs.google/vfx?flow=veo',
     icon: Video,
     color: 'text-rose-400',
@@ -30,12 +30,12 @@ const AI_TOOLS = [
     border: 'border-rose-500/25',
     hoverBg: 'hover:from-rose-500/20 hover:to-rose-600/20',
     gradient: 'from-rose-500/10 to-rose-600/10',
-    capabilities: ['Video', 'Cinematic', 'HD', 'Prompt-to-Video'],
+    capabilities: ['Vídeo', 'Cinematic', 'Prompt-to-Video', 'HD'],
   },
   {
     id: 'flow',
     name: 'Google Flow',
-    desc: 'Ferramenta de design e prototipagem com IA do Google Labs.',
+    desc: 'Ferramenta de IA do Google Labs utilizada para design, prototipagem e estruturação visual do fluxo de posts.',
     url: 'https://labs.google/flow',
     icon: Workflow,
     color: 'text-emerald-400',
@@ -43,7 +43,7 @@ const AI_TOOLS = [
     border: 'border-emerald-500/25',
     hoverBg: 'hover:from-emerald-500/20 hover:to-emerald-600/20',
     gradient: 'from-emerald-500/10 to-emerald-600/10',
-    capabilities: ['Design', 'Prototipo', 'IA', 'Colaboracao'],
+    capabilities: ['Design', 'Protótipo', 'Fluxo', 'Colaboração'],
   },
 ];
 
