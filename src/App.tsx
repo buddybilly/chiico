@@ -137,6 +137,7 @@ function SyncModal({ currentUserId, onSync }: { currentUserId: string; onSync: (
   );
 }
 
+// App principal atualizado
 export default function App() {
   const [userId, setUserId] = useState<string>(getOrCreateUserId);
   const [showSync, setShowSync] = useState(false);
