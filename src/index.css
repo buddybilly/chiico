@@ -42,9 +42,9 @@
     overflow-y: auto;
   }
 
-  /* Main content padding: mobile accounts for top bar + notch + bottom tab + home indicator */
+  /* Main content padding: mobile accounts for notch + bottom tab + home indicator */
   .main-scroll {
-    padding-top: calc(env(safe-area-inset-top, 0px) + 3.5rem);
+    padding-top: calc(env(safe-area-inset-top, 0px) + 0rem);
     padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 4rem);
   }
 
