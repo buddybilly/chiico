@@ -40,12 +40,9 @@ export default function Sidebar({ currentPage, onNavigate, username, onSyncDevic
   const sidebarContent = (
     <>
       <div className="p-4 border-b border-slate-800 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <img src="/uploads/1793550414941-0-IMG_3870.jpeg" alt="Logo" className="w-10 h-10 rounded-lg object-cover" />
-          <div>
-            <h1 className="text-base font-bold text-white">Etiquetas Prontuário</h1>
-            <p className="text-xs text-slate-500">Gestão de Postagens</p>
-          </div>
+        <div>
+          <h1 className="text-base font-bold text-white">Etiquetas Prontuário</h1>
+          <p className="text-xs text-slate-500">Gestão de Postagens</p>
         </div>
         <button
           className="lg:hidden p-1.5 text-slate-500 hover:text-white transition"
@@ -103,7 +100,6 @@ export default function Sidebar({ currentPage, onNavigate, username, onSyncDevic
         style={{ paddingTop: `calc(env(safe-area-inset-top, 0px) + 0.75rem)`, paddingBottom: '0.75rem' }}
       >
         <div className="flex items-center gap-2.5">
-          <img src="/uploads/1793550414941-0-IMG_3870.jpeg" alt="Logo" className="w-8 h-8 rounded-lg object-cover" />
           <span className="text-sm font-bold text-white">Prontuário</span>
         </div>
         <button
