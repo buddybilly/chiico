@@ -41,7 +41,6 @@ function getOrCreateUserId(): string {
   return id;
 }
 
-// Short sync code: first 8 chars of the UUID (easy to type)
 function codeFromId(id: string): string {
   return id.replace(/-/g, '').slice(0, 8).toUpperCase();
 }
@@ -65,7 +64,6 @@ function SyncModal({ currentUserId, onSync }: { currentUserId: string; onSync: (
       setError('Codigo invalido. Digite os 8 caracteres exatos.');
       return;
     }
-    // Find a userId whose code matches
     const { data } = await supabase
       .from('user_settings')
       .select('user_id')
@@ -93,7 +91,6 @@ function SyncModal({ currentUserId, onSync }: { currentUserId: string; onSync: (
           </div>
         </div>
 
-        {/* My code */}
         <div className="space-y-2">
           <p className="text-xs font-medium text-slate-400">SEU CODIGO NESTE DISPOSITIVO</p>
           <div className="flex items-center gap-3 bg-slate-800 border border-slate-700/50 rounded-xl px-4 py-3">
@@ -105,7 +102,6 @@ function SyncModal({ currentUserId, onSync }: { currentUserId: string; onSync: (
           <p className="text-xs text-slate-500">Copie este codigo e cole no outro dispositivo para sincronizar os dados.</p>
         </div>
 
-        {/* Enter other code */}
         <div className="space-y-2">
           <p className="text-xs font-medium text-slate-400">OU DIGITE O CODIGO DE OUTRO DISPOSITIVO</p>
           <input
@@ -137,7 +133,6 @@ function SyncModal({ currentUserId, onSync }: { currentUserId: string; onSync: (
   );
 }
 
-// App principal atualizado
 export default function App() {
   const [userId, setUserId] = useState<string>(getOrCreateUserId);
   const [showSync, setShowSync] = useState(false);
@@ -151,7 +146,6 @@ export default function App() {
     if (!localStorage.getItem(key)) setShowOnboarding(true);
   }, [userId]);
 
-  // Handle OAuth redirect callback (mobile flow)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get('oauth_success') === '1') {
@@ -159,17 +153,14 @@ export default function App() {
       const igAccountId = params.get('ig_account_id') || '';
       const igUsername = params.get('ig_username') || '';
 
-      // The edge function already saved to DB, just show success banner
       const msg = igUsername ? `Instagram @${igUsername} conectado!` : 'Instagram conectado com sucesso!';
       setOauthBanner({ type: 'success', msg });
       setPage('settings');
       setTimeout(() => setOauthBanner(null), 5000);
 
-      // Clean URL without reload
       const clean = window.location.pathname;
       window.history.replaceState({}, '', clean);
 
-      // Suppress unused var warning
       void igToken; void igAccountId;
     } else if (params.get('error')) {
       setOauthBanner({ type: 'error', msg: `Erro ao conectar: ${params.get('error')}` });
@@ -180,7 +171,6 @@ export default function App() {
     }
   }, []);
 
-  // Poll for 500+ view alerts
   useEffect(() => {
     const notified500 = new Set<string>();
 
@@ -196,9 +186,8 @@ export default function App() {
           if (!notified500.has(m.id) && m.reached_500) {
             notified500.add(m.id);
             if (Notification.permission === 'granted') {
-              new Notification('Odontoclass AI - 500+ visualizações!', {
+              new Notification('500+ visualizações!', {
                 body: `Seu post alcancou ${m.views} views!`,
-                icon: '/FE79B38A-DD32-4D48-A4F2-0F1A474620C3.jpeg',
               });
             }
           }
