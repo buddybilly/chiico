@@ -312,7 +312,7 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
         <div className="bg-slate-800/60 border border-slate-700/50 rounded-2xl p-4 sm:p-6">
           <h3 className="text-sm sm:text-base font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2"><Sparkles className="w-4 h-4 text-emerald-400" />Acoes Rapidas</h3>
           <div className="space-y-2 sm:space-y-3">
-            <button /* Botão Iniciar removido */ className="w-full flex items-center gap-3 p-3 sm:p-4 rounded-xl bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 hover:from-emerald-500/20 hover:to-teal-500/20 transition group">
+            <button onClick={() => onNavigate('create')} className="w-full flex items-center gap-3 p-3 sm:p-4 rounded-xl bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 hover:from-emerald-500/20 hover:to-teal-500/20 transition group">
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center"><Sparkles className="w-4 h-4 text-emerald-400" /></div>
               <div className="text-left"><p className="text-sm font-medium text-white">Gerar com IA</p><p className="text-xs text-slate-400 hidden sm:block">Pipeline de 3 agentes GPT</p></div>
             </button>
