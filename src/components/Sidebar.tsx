@@ -41,7 +41,7 @@ export default function Sidebar({ currentPage, onNavigate, username, onSyncDevic
     <>
       <div className="p-4 border-b border-slate-800 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img src="/FE79B38A-DD32-4D48-A4F2-0F1A474620C3.jpeg" alt="Logo" className="w-10 h-10 rounded-lg object-cover" />
+          <img src="/uploads/1741549421588-0-IMG_3870.jpeg" alt="Logo" className="w-10 h-10 rounded-lg object-cover" />
           <div>
             <h1 className="text-base font-bold text-white">Etiquetas Prontuário</h1>
             <p className="text-xs text-slate-500">Gestão de Postagens</p>
@@ -98,13 +98,12 @@ export default function Sidebar({ currentPage, onNavigate, username, onSyncDevic
 
   return (
     <>
-      {/* Mobile top bar — includes safe-area-inset-top for notch/Dynamic Island */}
       <div
         className="lg:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 border-b border-slate-800 ios-blur bg-slate-900/95"
         style={{ paddingTop: `calc(env(safe-area-inset-top, 0px) + 0.75rem)`, paddingBottom: '0.75rem' }}
       >
         <div className="flex items-center gap-2.5">
-          <img src="/FE79B38A-DD32-4D48-A4F2-0F1A474620C3.jpeg" alt="Logo" className="w-8 h-8 rounded-lg object-cover" />
+          <img src="/uploads/1741549421588-0-IMG_3870.jpeg" alt="Logo" className="w-8 h-8 rounded-lg object-cover" />
           <span className="text-sm font-bold text-white">Prontuário</span>
         </div>
         <button
@@ -116,7 +115,6 @@ export default function Sidebar({ currentPage, onNavigate, username, onSyncDevic
         </button>
       </div>
 
-      {/* Mobile bottom tab bar — includes safe-area-inset-bottom for home indicator */}
       <nav
         className="lg:hidden fixed bottom-0 left-0 right-0 z-40 ios-blur bg-slate-900/95 border-t border-slate-800 flex items-stretch"
         style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
@@ -140,7 +138,6 @@ export default function Sidebar({ currentPage, onNavigate, username, onSyncDevic
         })}
       </nav>
 
-      {/* Mobile drawer overlay */}
       {mobileOpen && (
         <div
           className="lg:hidden fixed inset-0 z-50 bg-black/60 ios-blur"
@@ -148,7 +145,6 @@ export default function Sidebar({ currentPage, onNavigate, username, onSyncDevic
         />
       )}
 
-      {/* Mobile full drawer (all items) */}
       <aside
         className={`lg:hidden fixed top-0 left-0 z-50 w-72 bg-slate-900 border-r border-slate-800 flex flex-col transition-transform duration-300 ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}
         style={{ height: '100%', paddingTop: 'env(safe-area-inset-top, 0px)', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
@@ -156,7 +152,6 @@ export default function Sidebar({ currentPage, onNavigate, username, onSyncDevic
         {sidebarContent}
       </aside>
 
-      {/* Desktop sidebar */}
       <aside className="hidden lg:flex w-64 bg-slate-900 border-r border-slate-800 flex-col h-screen sticky top-0">
         {sidebarContent}
       </aside>
