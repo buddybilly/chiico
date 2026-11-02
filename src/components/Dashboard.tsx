@@ -58,7 +58,6 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
         });
       }
 
-      // Process metrics
       if (metricsRes.data) {
         const metricsMap: Record<string, PostMetric> = {};
         const top: (PostMetric & { caption: string })[] = [];
@@ -73,7 +72,6 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
         setTopPosts(top);
       }
 
-      // Process weekly activity
       if (weeklyRes.data) {
         const days: Record<string, number> = {};
         const dayNames = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
@@ -117,7 +115,6 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
           }
         }
       }
-      // Reload data without full page reload
       const [postsRes, allRes, metricsRes] = await Promise.all([
         supabase.from('scheduled_posts').select('*').eq('user_id', userId).order('created_at', { ascending: false }).limit(5),
         supabase.from('scheduled_posts').select('status').eq('user_id', userId),
@@ -142,7 +139,7 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
         setMetrics(metricsMap);
         setTopPosts(top);
       }
-    } catch { /* silent */ }
+    } catch { }
     setFetchingMetrics(false);
   }
 
@@ -165,13 +162,6 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
     { label: '500+ Views', value: posts500, icon: Zap, color: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20' },
   ];
 
-  const statusLabel: Record<string, { label: string; cls: string }> = {
-    draft: { label: 'Rascunho', cls: 'bg-slate-500/20 text-slate-400' },
-    scheduled: { label: 'Agendado', cls: 'bg-amber-500/20 text-amber-400' },
-    published: { label: 'Publicado', cls: 'bg-emerald-500/20 text-emerald-400' },
-    failed: { label: 'Falhou', cls: 'bg-red-500/20 text-red-400' },
-  };
-
   const nextScheduled = recentPosts
     .filter(p => p.status === 'scheduled' && p.scheduled_at)
     .sort((a, b) => new Date(a.scheduled_at!).getTime() - new Date(b.scheduled_at!).getTime())[0];
@@ -185,7 +175,6 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
         />
       )}
 
-      {/* Platform Connection Status */}
       <div className="mb-5 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
         {[
           { key: 'instagram' as const, label: 'Instagram', Icon: Instagram, color: 'text-pink-400', bg: 'bg-pink-500/10', border: 'border-pink-500/20' },
@@ -207,8 +196,6 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
         })}
       </div>
 
-
-
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
         {statCards.map(card => {
           const Icon = card.icon;
@@ -222,7 +209,6 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
         })}
       </div>
 
-      {/* Metrics Cards */}
       {stats.published > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
           {metricCards.map(card => {
@@ -238,7 +224,6 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
         </div>
       )}
 
-      {/* Weekly Activity Chart */}
       {weeklyData.length > 0 && weeklyData.some(d => d.posts > 0) && (
         <div className="mb-5 sm:mb-6 bg-slate-800/60 border border-slate-700/50 rounded-2xl p-4 sm:p-6">
           <h3 className="text-sm font-semibold text-white mb-4 sm:mb-5 flex items-center gap-2">
@@ -267,7 +252,6 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
       )}
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-        {/* Next Scheduled Post */}
         <div className="bg-slate-800/60 border border-slate-700/50 rounded-2xl p-4 sm:p-6">
           <h3 className="text-sm sm:text-base font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2"><Calendar className="w-4 h-4 text-amber-400" />Proximo Agendamento</h3>
           {nextScheduled ? (
@@ -284,7 +268,6 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
           )}
         </div>
 
-        {/* Top Performing Posts */}
         <div className="bg-slate-800/60 border border-slate-700/50 rounded-2xl p-4 sm:p-6">
           <h3 className="text-sm sm:text-base font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2"><BarChart3 className="w-4 h-4 text-sky-400" />Top Performances</h3>
           {topPosts.length === 0 ? (
@@ -308,7 +291,6 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
           )}
         </div>
 
-        {/* Quick Actions */}
         <div className="bg-slate-800/60 border border-slate-700/50 rounded-2xl p-4 sm:p-6">
           <h3 className="text-sm sm:text-base font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2"><Sparkles className="w-4 h-4 text-emerald-400" />Acoes Rapidas</h3>
           <div className="space-y-2 sm:space-y-3">
