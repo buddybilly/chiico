@@ -13,7 +13,7 @@ const STEPS = [
     color: 'text-sky-400',
     bg: 'bg-sky-500/15',
     border: 'border-sky-500/20',
-    title: 'Bem-vindo ao PostFlow IA',
+    title: 'oi',
     desc: 'Seu assistente de conteudo para Instagram com inteligencia artificial. Em 2 passos voce estara pronto para criar e agendar posts incriveis.',
     action: null,
   },
