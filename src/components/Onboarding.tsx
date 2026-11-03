@@ -106,16 +106,6 @@ export default function Onboarding({ onComplete, onNavigate }: Props) {
                     {step.actionLabel}
                   </button>
                 )}
-                <button
-                  onClick={handleNext}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition ${step.action ? 'text-slate-400 hover:text-white' : `bg-sky-500 hover:bg-sky-400 text-white shadow-lg shadow-sky-500/20`}`}
-                >
-                  {isLast ? (
-                    <><Check className="w-3.5 h-3.5" /> Concluir</>
-                  ) : (
-                    step.action ? 'Pular este passo' : <><ArrowRight className="w-3.5 h-3.5" /> Proximo</>
-                  )}
-                </button>
               </div>
             </div>
           </div>
