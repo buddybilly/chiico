@@ -298,10 +298,7 @@ export default function Dashboard({ userId, onNavigate, showOnboarding, onOnboar
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center"><Sparkles className="w-4 h-4 text-emerald-400" /></div>
               <div className="text-left"><p className="text-sm font-medium text-white">Gerar com IA</p><p className="text-xs text-slate-400 hidden sm:block">Pipeline de 3 agentes GPT</p></div>
             </button>
-            <button onClick={() => onNavigate('quick-edit')} className="w-full flex items-center gap-3 p-3 sm:p-4 rounded-xl bg-gradient-to-r from-cyan-500/10 to-teal-500/10 border border-cyan-500/20 hover:from-cyan-500/20 hover:to-teal-500/20 transition group">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-cyan-500/20 flex items-center justify-center"><Edit3 className="w-4 h-4 text-cyan-400" /></div>
-              <div className="text-left"><p className="text-sm font-medium text-white">Edicao Manual</p><p className="text-xs text-slate-400 hidden sm:block">Edite imagem e legenda</p></div>
-            </button>
+
             <button onClick={() => onNavigate('scheduled')} className="w-full flex items-center gap-3 p-3 sm:p-4 rounded-xl bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 hover:from-amber-500/20 hover:to-orange-500/20 transition group">
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-amber-500/20 flex items-center justify-center"><Calendar className="w-4 h-4 text-amber-400" /></div>
               <div className="text-left"><p className="text-sm font-medium text-white">Ver Agendados</p><p className="text-xs text-slate-400 hidden sm:block">Gerencie posts e metricas</p></div>
